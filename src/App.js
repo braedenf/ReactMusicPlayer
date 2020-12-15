@@ -1,19 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 
 //Import Components
 import CreateTweet from './Components/CreateTweet'
 import TweetList from "./Components/TweetList";
 
-const name = "Username";
-const message = "This is the standard message.";
-
 function App() {
+
+  //State
+  const [textInput, setTextInput] = useState("");
+  const [tweets, setTweets] = useState([]);
+
+  const [name, setName] = useState("Braeden");
+  const message = "This is a message";
 
   return (
     <div>
-        <h1>Hello React</h1>
-        <CreateTweet />
-        <TweetList name={name} message={message}/>
+        <CreateTweet
+          textInput={textInput}
+          setTextInput={setTextInput}
+          tweets={tweets}
+          setTweets={setTweets}
+        />
+        <TweetList name={name} tweets={tweets}/>
     </div>
   );
 }
