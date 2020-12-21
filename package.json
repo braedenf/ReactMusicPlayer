@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "react-player",
   "version": "0.1.0",
   "private": true,
@@ -15,18 +14,6 @@
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "uuid": "^8.3.2",
-=======
-  "name": "react-starter",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.5.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
->>>>>>> 1e74476bab0497487127ae63bb8fd0c27f74bb4c
     "web-vitals": "^0.2.4"
   },
   "scripts": {
