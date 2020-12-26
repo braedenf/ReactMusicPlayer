@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -6,8 +6,6 @@ import {
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
-
-import { playAudio } from "../util";
 
 const Player = ({
   isPlaying,
@@ -20,9 +18,9 @@ const Player = ({
   currentSong,
   setCurrentSong,
 }) => {
-  useEffect(() => {
+  const activeLibraryHandler = (nextPrev) => {
     const newSongs = songs.map((song) => {
-      if (song.id === currentSong.id) {
+      if (song.id === nextPrev.id) {
         return {
           ...song,
           active: true,
@@ -37,7 +35,7 @@ const Player = ({
 
     // Now update the state by setting the songs
     setSongs(newSongs);
-  }, [currentSong]);
+  };
 
   //EVENT HANDLERS
   const playSongHandler = () => {
@@ -63,7 +61,7 @@ const Player = ({
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
 
-  const skipTrackHandler = (direction) => {
+  const skipTrackHandler = async (direction) => {
     /*
       Gets the index of the current song by comparing
       the id of each song to the current songs id.
@@ -71,11 +69,19 @@ const Player = ({
     let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
 
     if (direction === "skip-forward") {
-      setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+      const nextSong = songs[(currentIndex + 1) % songs.length];
+
+      await setCurrentSong(nextSong);
+      activeLibraryHandler(nextSong);
     } else if (direction === "skip-back") {
-      setCurrentSong(songs[(currentIndex + (songs.length - 1)) % songs.length]);
+      const prevSong =
+        songs[(currentIndex + (songs.length - 1)) % songs.length];
+
+      await setCurrentSong(prevSong);
+      activeLibraryHandler(prevSong);
+      if (isPlaying) audioRef.current.play();
     }
-    playAudio(isPlaying, audioRef);
+    if (isPlaying) audioRef.current.play();
   };
   //Add the styles
   const trackAnim = {

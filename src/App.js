@@ -2,13 +2,14 @@ import React, { useState, useRef } from "react";
 //Import Styles
 import "./styles/app.scss";
 // Import Components
-import Player from "./components/Player";
-import Song from "./components/Song";
-import Library from "./components/Library";
-import Nav from "./components/Nav";
+import Player from "./Components/Player";
+import Song from "./Components/Song";
+import Library from "./Components/Library";
+import Nav from "./Components/Nav";
 
 //import data
 import data from "./data";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 function App() {
   //Ref
@@ -49,8 +50,16 @@ function App() {
     animationPercentage: 0,
   });
 
+  //When the song ends, skip foward to next song and play song
+
+  const songEndHandler = async () => {
+    let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
+    await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+    if (isPlaying) audioRef.current.play();
+  };
+
   return (
-    <div>
+    <div className={`App ${libraryStatus ? "Library-Active" : ""}`}>
       <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
       <Song currentSong={currentSong} />
       <Player
@@ -77,6 +86,7 @@ function App() {
         onLoadedMetadata={timeUpdateHandler}
         ref={audioRef}
         src={currentSong.audio}
+        onEnded={songEndHandler}
       ></audio>
     </div>
   );

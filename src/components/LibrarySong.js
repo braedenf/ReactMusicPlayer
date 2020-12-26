@@ -1,5 +1,4 @@
 import React from "react";
-import { playAudio } from "../util";
 
 const LibrarySong = ({
   song,
@@ -11,9 +10,9 @@ const LibrarySong = ({
   setSongs,
 }) => {
   //HANDLERS
-  const songSelectHandler = () => {
+  const songSelectHandler = async () => {
     const selectedSong = songs.filter((stateSongs) => stateSongs.id === id);
-    setCurrentSong(selectedSong[0]);
+    await setCurrentSong(selectedSong[0]);
     /*
       Check if the current song id matches an id in the library song list
       by mapping over the song list data object.
@@ -46,7 +45,7 @@ const LibrarySong = ({
       is loaded using a promise.
     */
 
-    playAudio(isPlaying, audioRef);
+   if (isPlaying) audioRef.current.play();
   };
 
   return (
