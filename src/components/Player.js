@@ -18,6 +18,8 @@ const Player = ({
   currentSong,
   setCurrentSong,
 }) => {
+  //Switch song in library
+
   const activeLibraryHandler = (nextPrev) => {
     const newSongs = songs.map((song) => {
       if (song.id === nextPrev.id) {
